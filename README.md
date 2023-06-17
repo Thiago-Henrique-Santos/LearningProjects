@@ -1,4 +1,4 @@
-# Cool Projects
+# Learning Projects
 
 This repository keeps simple projects I do for recollect, practice and buff up programming learnings.
 
