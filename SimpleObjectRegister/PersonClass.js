@@ -1,11 +1,11 @@
 class Person {
-    constructor (firstName, lastName, birthdate, height, weight) {
-        this.id = 1;
+    constructor (id, firstName, lastName, birthdate, height, weight) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthdate = new Date(`${birthdate[2]}-${birthdate[1]}-${birthdate[0]}`);
         this.height = height;
-        this.weight = wight;
+        this.weight = weight;
+        this.birthdate = new Date(birthdate);
     }
 
     get id() {
@@ -20,20 +20,20 @@ class Person {
         return this.lastName;
     }
 
-    get birthdate() {
-        const day  = this.birthdate.getUTCDate();
-        const month = this.birthdate.getUTCMonth()+1;
-        const year = this.birthdate.getFullYear();
-        const birthdate = [day, month, year];
-        return birthdate;
-    }
-
     get height() {
         return this.height;
     }
 
     get weight() {
         return this.weight;
+    }
+
+    get birthdate() {
+        const day  = this.birthdate.getUTCDate();
+        const month = this.birthdate.getUTCMonth()+1;
+        const year = this.birthdate.getFullYear();
+        const birthdate = [day, month, year];
+        return birthdate;
     }
 
     get fullName() {
@@ -43,7 +43,7 @@ class Person {
 
     get age() {
         const currentDate = new Date();
-        
+
         let age = 0;
         if (currentDate.getMonth()+1 >= this.birthdate.getUTCMonth()+1 && currentDate.getDate() >= this.birthdate.getUTCDate())
             age = currentDate.getYear() - this.birthdate.getYear();

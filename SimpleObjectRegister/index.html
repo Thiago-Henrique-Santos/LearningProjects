@@ -6,6 +6,31 @@
     <title>Objects register</title>
 </head>
 <body>
-    
+    <main id="container">
+        <section id="register">
+            <label for="firstName" class="register">Primeiro nome:</label><br>
+            <input placeholder="Ex: João" type="text" autocomplete="name" name="firstName"><br>
+            <label for="lastName" class="register">Sobrenome</label><br>
+            <input placeholder="Ex: Araújo" type="text" autocomplete="name" name="lastName"><br>
+            <label for="height" class="register">Altura:</label><br>
+            <input placeholder="Ex: 1,80" type="text" autocomplete="name" name="height"><br>
+            <label for="weight" class="register">Peso:</label><br>
+            <input placeholder="Ex: 89,7" type="text" autocomplete="name" name="weight"><br>
+            <label for="birthdate" class="register">Data de nascimento:</label><br>
+            <input type="date" autocomplete="name" name="birthdate">
+        </section>
+
+        <section id="read">
+            <div id="filter">
+                <label for="person" class="read">Pessoa: </label>
+                <select name="person" class="read">
+                    <option value="0">Nenhum selecionado</option>
+                </select><br>
+                <button class="read" id="readPerson">CONSULTAR</button>
+                <button class="read" id="readAll">CONSULTAR TODOS</button>
+            </div>
+            <div id="showInformations"></div>
+        </section>
+    </main>
 </body>
 </html>
