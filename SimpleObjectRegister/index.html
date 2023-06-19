@@ -10,13 +10,13 @@
     <main id="container">
         <section id="register">
             <label for="firstName" class="register">Primeiro nome:</label><br>
-            <input placeholder="Ex: João" type="text" autocomplete="name" name="firstName"><br>
+            <input placeholder="Ex: João" type="text" autocomplete="name" name="firstName" class="register"><br>
             <label for="lastName" class="register">Sobrenome</label><br>
-            <input placeholder="Ex: Araújo" type="text" autocomplete="name" name="lastName"><br>
+            <input placeholder="Ex: Araújo" type="text" autocomplete="name" name="lastName" class="register"><br>
             <label for="height" class="register">Altura:</label><br>
-            <input placeholder="Ex: 1,80" type="text" autocomplete="name" name="height"><br>
+            <input placeholder="Ex: 1,80" type="text" autocomplete="name" name="height" class="register"><br>
             <label for="weight" class="register">Peso:</label><br>
-            <input placeholder="Ex: 89,7" type="text" autocomplete="name" name="weight"><br>
+            <input placeholder="Ex: 89,7" type="text" autocomplete="name" name="weight" class="register"><br>
             <label for="birthdate" class="register">Data de nascimento:</label><br>
             <input type="date" autocomplete="name" name="birthdate">
         </section>
@@ -26,11 +26,14 @@
                 <label for="person" class="read">Pessoa: </label>
                 <select name="person" class="read">
                     <option value="0">Nenhum selecionado</option>
-                </select><br>
-                <button class="read" id="readPerson">CONSULTAR</button>
+                </select>
+                <button class="read" id="readPerson">CONSULTAR</button><br>
                 <button class="read" id="readAll">CONSULTAR TODOS</button>
             </div>
-            <div id="showInformations"></div>
+            <div id="showInformations">
+                Nome: lorem ipsum<br>
+                Data de nascimento: 06/06/2013
+            </div>
         </section>
     </main>
 </body>
