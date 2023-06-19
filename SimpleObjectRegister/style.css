@@ -52,6 +52,14 @@ button {
     color: black;
 }
 
+button:hover {
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.9);
+}
+
 button#readPerson {
     width: 100px;
     background-color: gray;
