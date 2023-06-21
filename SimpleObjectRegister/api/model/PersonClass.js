@@ -1,3 +1,5 @@
+const database = require('../database/connection');
+
 class Person {
     constructor (id, firstName, lastName, birthdate, height, weight) {
         this.id = id;
@@ -52,4 +54,37 @@ class Person {
 
         return age;
     }
+}
+
+function getEveryone () {
+    return new Promise((resolve, reject)=>{
+        let everyone = [];
+
+        const sql = "SELECT * FROM person;";
+        const db = database.open('./database/database.db');
+        
+        db.all(sql, [], (err, rows) => {
+            if (err) {
+                reject(JSON.stringify({message : `Erro: ${err.message}`}));
+            }
+
+            rows.forEach(row => {
+                const id = row.id;
+                const firstName = row.firstName;
+                const lastName = row.lastName;
+                const height = row.height;
+                const weight = row.weight;
+                const birthdate = row.birthdate;
+                everyone.push(new Person(id, firstName, lastName, height, weight, birthdate));
+            });
+        });
+
+        database.close(db);
+        resolve(everyone);
+    });
+}
+
+export { Person };
+module.export = {
+    getEveryone
 }
