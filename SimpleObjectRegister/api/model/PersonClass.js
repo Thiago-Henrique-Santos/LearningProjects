@@ -10,6 +10,15 @@ class Person {
         this.birthdate = new Date(birthdate);
     }
 
+    constructor (firstName, lastName, birthdate, height, weight) {
+        this.id = null;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.height = height;
+        this.weight = weight;
+        this.birthdate = new Date(birthdate);
+    }
+
     get id() {
         return this.id;
     }
@@ -56,6 +65,28 @@ class Person {
     }
 }
 
+function register(firstName, lastName, weight, height, birthdate) {
+    return new Promise((resolve, reject) => {
+        let registeredUserId = 0;
+
+        const sql = "INSERT INTO Person(firstName, lastName, weight, height, birthdate) VALUES(?, ?, ?, ?, ?)";
+        
+        const db = database.open('./database/database.db');
+        const query = db.prepare(sql);
+        query.run(firstName, lastName, weight, height, birthdate, function(err){
+            if (err) {
+                reject(err);
+            } else {
+                registeredUserId = this.id;
+            }
+        });
+        query.finalize();
+        database.close(db);
+
+        resolve(registeredUserId);
+    });
+}
+
 function getEveryone () {
     return new Promise((resolve, reject)=>{
         let everyone = [];
@@ -86,5 +117,6 @@ function getEveryone () {
 
 export { Person };
 module.export = {
-    getEveryone
+    getEveryone,
+    register
 }
