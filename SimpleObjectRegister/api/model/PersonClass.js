@@ -1,6 +1,15 @@
 const database = require('../database/connection');
 
 class Person {
+    constructor () {
+        this.id = 0;
+        this.firstName = "none";
+        this.lastName = "none";
+        this.height = "none";
+        this.weight = "none";
+        this.birthdate = "none";
+    }
+
     constructor (id, firstName, lastName, birthdate, height, weight) {
         this.id = id;
         this.firstName = firstName;
@@ -67,7 +76,8 @@ class Person {
 
 function register(firstName, lastName, weight, height, birthdate) {
     return new Promise((resolve, reject) => {
-        let registeredUserId = 0;
+        let registeredPerson = new Person();
+        let registeredPersonId = 0;
 
         const sql = "INSERT INTO Person(firstName, lastName, weight, height, birthdate) VALUES(?, ?, ?, ?, ?)";
         
@@ -75,15 +85,29 @@ function register(firstName, lastName, weight, height, birthdate) {
         const query = db.prepare(sql);
         query.run(firstName, lastName, weight, height, birthdate, function(err){
             if (err) {
-                reject(err);
+                reject(JSON.stringify({message : `Erro: ${err.message}`}));
             } else {
-                registeredUserId = this.id;
+                registeredPersonId = this.id;
             }
         });
         query.finalize();
+
+        sql = `SELECT * FROM person WHERE id = ${registeredPersonId};`;
+        db.get(sql, [registeredPersonId], (err, row) => {
+            if (err) {
+                reject(JSON.stringify({message : `Erro: ${err.message}`}));
+            } else {
+                registeredPerson.id = row.id;
+                registeredPerson.firstName = row.firstPerson;
+                registeredPerson.lastName = row.lastName;
+                registeredPerson.height = row.height;
+                registeredPerson.weight = row.weight;
+                registeredPerson.birthdate = new Date(row.birthdate);
+            }
+        });
         database.close(db);
 
-        resolve(registeredUserId);
+        resolve(registeredPerson);
     });
 }
 
