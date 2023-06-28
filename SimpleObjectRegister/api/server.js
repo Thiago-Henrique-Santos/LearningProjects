@@ -6,23 +6,23 @@ const port = 3000;
 const server = http.createServer((req, res)=>{
     const url = req.url;
 
-    if (req.method === 'GET') {
+    if (req.method == 'GET') {
         switch (url) {
-            case "api/person":
+            case "/api/person":
                 res.writeHead(200, {'Content-Type': 'application/json'});
-                res.end(JSON.stringify('{"startStats" : "Veja os cadastros!"}'));
+                res.end(JSON.stringify({"startStats" : "Veja os cadastros!"}));
                 break;
         }
-    } else if (req.method === 'POST') {
+    } else if (req.method == 'POST') {
         switch (url) {
-            case "api/person":
+            case "/api/person":
                 res.writeHead(201, {'Content-Type': 'application/json'});
-                res.end(JSON.stringify('{"startStats" : "Cadastro realizado com sucesso!"}'));
+                res.end(JSON.stringify({"startStats" : "Cadastro realizado com sucesso!"}));
                 break;
         }
     } else {
         res.writeHead(404, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify('{"startStats" : "Rota não encontrada!"}'));
+        res.end(JSON.stringify({"startStats" : "Rota não encontrada!"}));
     }
 });
 
