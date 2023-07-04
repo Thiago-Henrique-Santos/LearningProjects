@@ -2,11 +2,11 @@ const database = require('../database/connection');
 
 class Person {
     constructor () {
-        this.id = 0;
+        this.id = null;
         this.firstName = "none";
         this.lastName = "none";
-        this.height = "none";
-        this.weight = "none";
+        this.height = 0;
+        this.weight = 0;
         this.birthdate = "none";
     }
 
