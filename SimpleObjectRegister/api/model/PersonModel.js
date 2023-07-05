@@ -1,31 +1,13 @@
 const database = require('../database/connection');
 
 class Person {
-    constructor () {
-        this.id = null;
-        this.firstName = "none";
-        this.lastName = "none";
-        this.height = 0;
-        this.weight = 0;
-        this.birthdate = "none";
-    }
-
     constructor (id, firstName, lastName, birthdate, height, weight) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.height = height;
-        this.weight = weight;
-        this.birthdate = new Date(birthdate);
-    }
-
-    constructor (firstName, lastName, birthdate, height, weight) {
-        this.id = null;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.height = height;
-        this.weight = weight;
-        this.birthdate = new Date(birthdate);
+        this.id = id || 0;
+        this.firstName = firstName || "none";
+        this.lastName = lastName || "none";
+        this.height = height || 0;
+        this.weight = weight || 0;
+        this.birthdate = birthdate ? new Date(birthdate) : "none";
     }
 
     get id() {
@@ -139,8 +121,8 @@ function getEveryone () {
     });
 }
 
-export { Person };
-module.export = {
+module.exports = {
+    Person,
     getEveryone,
     register
 }

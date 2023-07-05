@@ -1,4 +1,5 @@
 const http = require('http');
+const { getEveryone } = require('./controller/PersonController');
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -9,8 +10,7 @@ const server = http.createServer((req, res)=>{
     if (req.method == 'GET') {
         switch (url) {
             case "/api/person":
-                res.writeHead(200, {'Content-Type': 'application/json'});
-                res.end(JSON.stringify({"startStats" : "Veja os cadastros!"}));
+                getEveryone(req, res);
                 break;
         }
     } else if (req.method == 'POST') {
