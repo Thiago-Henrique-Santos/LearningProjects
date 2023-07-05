@@ -10,34 +10,6 @@ class Person {
         this.birthdate = birthdate ? new Date(birthdate) : "none";
     }
 
-    get id() {
-        return this.id;
-    }
-
-    get firstName() {
-        return this.firstName;
-    }
-
-    get lastName() {
-        return this.lastName;
-    }
-
-    get height() {
-        return this.height;
-    }
-
-    get weight() {
-        return this.weight;
-    }
-
-    get birthdate() {
-        const day  = this.birthdate.getUTCDate();
-        const month = this.birthdate.getUTCMonth()+1;
-        const year = this.birthdate.getFullYear();
-        const birthdate = [day, month, year];
-        return birthdate;
-    }
-
     get fullName() {
         const fullName = this.firstName + this.lastName;
         return fullName;
@@ -97,8 +69,8 @@ function getEveryone () {
     return new Promise((resolve, reject)=>{
         let everyone = [];
 
-        const sql = "SELECT * FROM person;";
-        const db = database.open('./database/database.db');
+        const sql = "SELECT rowid, * FROM person;";
+        const db = database.open('C:/Users/User/Desktop/Thiago/Projetos/LearningProjects/SimpleObjectRegister/api/database/database.db');
         
         db.all(sql, [], (err, rows) => {
             if (err) {
@@ -106,7 +78,7 @@ function getEveryone () {
             }
 
             rows.forEach(row => {
-                const id = row.id;
+                const id = row.rowid;
                 const firstName = row.firstName;
                 const lastName = row.lastName;
                 const height = row.height;
@@ -114,10 +86,11 @@ function getEveryone () {
                 const birthdate = row.birthdate;
                 everyone.push(new Person(id, firstName, lastName, height, weight, birthdate));
             });
+            
+            resolve(everyone);
         });
 
         database.close(db);
-        resolve(everyone);
     });
 }
 
