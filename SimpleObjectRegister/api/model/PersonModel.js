@@ -1,4 +1,5 @@
 const database = require('../database/connection');
+const databaseDirectory = __dirname + '/../database/database.db';
 
 class Person {
     constructor (id, firstName, lastName, birthdate, height, weight) {
@@ -35,7 +36,7 @@ function register(firstName, lastName, weight, height, birthdate) {
 
         const sql = "INSERT INTO Person(firstName, lastName, weight, height, birthdate) VALUES(?, ?, ?, ?, ?)";
         
-        const db = database.open('./database/database.db');
+        const db = database.open(databaseDirectory);
         const query = db.prepare(sql);
         query.run(firstName, lastName, weight, height, birthdate, function(err){
             if (err) {
@@ -70,8 +71,6 @@ function getEveryone () {
         let everyone = [];
 
         const sql = "SELECT rowid, * FROM person;";
-
-        const databaseDirectory = __dirname + '/../database/database.db';
         const db = database.open(databaseDirectory);
         
         db.all(sql, [], (err, rows) => {
