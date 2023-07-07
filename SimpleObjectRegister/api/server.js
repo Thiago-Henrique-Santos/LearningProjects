@@ -12,6 +12,10 @@ const server = http.createServer((req, res)=>{
             case "/api/person":
                 getEveryone(req, res);
                 break;
+            default:
+                res.writeHead(404, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify({"error" : "Route not found!"}));
+                break;
         }
     } else if (req.method == 'POST') {
         switch (url) {
@@ -19,10 +23,14 @@ const server = http.createServer((req, res)=>{
                 res.writeHead(201, {'Content-Type': 'application/json'});
                 res.end(JSON.stringify({"startStats" : "Cadastro realizado com sucesso!"}));
                 break;
+                default:
+                    res.writeHead(404, {'Content-Type': 'application/json'});
+                    res.end(JSON.stringify({"error" : "Route not found!"}));
+                    break;
         }
     } else {
         res.writeHead(404, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify({"startStats" : "Rota não encontrada!"}));
+        res.end(JSON.stringify({"error" : "Route not found!"}));
     }
 });
 
