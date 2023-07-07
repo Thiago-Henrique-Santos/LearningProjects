@@ -70,7 +70,9 @@ function getEveryone () {
         let everyone = [];
 
         const sql = "SELECT rowid, * FROM person;";
-        const db = database.open('C:/Users/User/Desktop/Thiago/Projetos/LearningProjects/SimpleObjectRegister/api/database/database.db');
+
+        const databaseDirectory = __dirname + '/../database/database.db';
+        const db = database.open(databaseDirectory);
         
         db.all(sql, [], (err, rows) => {
             if (err) {
