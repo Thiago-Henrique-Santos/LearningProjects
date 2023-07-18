@@ -7,7 +7,7 @@ async function getEveryone (req, res) {
         res.end(JSON.stringify({everyone}));
     } catch (error) {
         res.writeHead(500, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify({"startStats" : `Reporte o ocorrido! Ocorreu o seguinte erro: ${error}`}));
+        res.end(JSON.stringify({"startStats" : `Ocorreu o seguinte erro: ${error}`}));
     }
 }
 

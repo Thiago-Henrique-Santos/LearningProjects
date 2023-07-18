@@ -80,8 +80,8 @@ function getEveryone () {
 
             rows.forEach(row => {
                 const id = row.rowid;
-                const firstName = row.firstName;
-                const lastName = row.lastName;
+                const firstName = row.firstname;
+                const lastName = row.lastname;
                 const height = row.height;
                 const weight = row.weight;
                 const birthdate = row.birthdate;
