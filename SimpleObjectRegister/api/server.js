@@ -1,5 +1,5 @@
 const http = require('http');
-const { getEveryone } = require('./controller/PersonController');
+const { getEveryone, register } = require('./controller/PersonController');
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -20,13 +20,12 @@ const server = http.createServer((req, res)=>{
     } else if (req.method == 'POST') {
         switch (url) {
             case "/api/person":
-                res.writeHead(201, {'Content-Type': 'application/json'});
-                res.end(JSON.stringify({"startStats" : "Cadastro realizado com sucesso!"}));
+                register(req, res);
                 break;
-                default:
-                    res.writeHead(404, {'Content-Type': 'application/json'});
-                    res.end(JSON.stringify({"error" : "Route not found!"}));
-                    break;
+            default:
+                res.writeHead(404, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify({"error" : "Route not found!"}));
+                break;
         }
     } else {
         res.writeHead(404, {'Content-Type': 'application/json'});

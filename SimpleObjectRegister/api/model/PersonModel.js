@@ -29,44 +29,46 @@ class Person {
     }
 }
 
-function register(firstName, lastName, weight, height, birthdate) {
+function createPerson(person) {
     return new Promise((resolve, reject) => {
+        const newPerson = person;
         let registeredPerson = new Person();
         let registeredPersonId = 0;
 
-        const sql = "INSERT INTO Person(firstName, lastName, weight, height, birthdate) VALUES(?, ?, ?, ?, ?)";
+        let sql = "INSERT INTO Person(firstName, lastName, weight, height, birthdate) VALUES(?, ?, ?, ?, ?)";
         
         const db = database.open(databaseDirectory);
-        const query = db.prepare(sql);
-        query.run(firstName, lastName, weight, height, birthdate, function(err){
+        //const query = db.prepare(sql);
+        db.run(sql, [newPerson.firstName, newPerson.lastName, newPerson.weight, newPerson.height, newPerson.birthdate], function(err){
             if (err) {
                 reject(JSON.stringify({message : `Erro: ${err.message}`}));
             } else {
-                registeredPersonId = this.id;
+                registeredPersonId = this.lastID;
             }
         });
-        query.finalize();
+        //query.finalize();
 
-        sql = `SELECT * FROM person WHERE id = ${registeredPersonId};`;
+        sql = `SELECT * FROM person WHERE rowid = ?;`;
         db.get(sql, [registeredPersonId], (err, row) => {
             if (err) {
                 reject(JSON.stringify({message : `Erro: ${err.message}`}));
             } else {
-                registeredPerson.id = row.id;
-                registeredPerson.firstName = row.firstPerson;
-                registeredPerson.lastName = row.lastName;
+                registeredPerson.id = row.rowid;
+                registeredPerson.firstName = row.firstname;
+                registeredPerson.lastName = row.lastname;
                 registeredPerson.height = row.height;
                 registeredPerson.weight = row.weight;
-                registeredPerson.birthdate = new Date(row.birthdate);
+                registeredPerson.birthdate = row.birthdate;
             }
-        });
-        database.close(db);
 
-        resolve(registeredPerson);
+            resolve(registeredPerson);
+        });
+
+        database.close(db);
     });
 }
 
-function getEveryone () {
+function getAll () {
     return new Promise((resolve, reject)=>{
         let everyone = [];
 
@@ -97,6 +99,6 @@ function getEveryone () {
 
 module.exports = {
     Person,
-    getEveryone,
-    register
+    getAll,
+    createPerson
 }
