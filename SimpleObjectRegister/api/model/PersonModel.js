@@ -1,9 +1,10 @@
+const { v4: uuidv4 } = require('uuid');
 const database = require('../database/connection');
 const databaseDirectory = __dirname + '/../database/database.db';
 
 class Person {
     constructor (id, firstName, lastName, birthdate, height, weight) {
-        this.id = id || 0;
+        this.id = id || uuidv4();
         this.firstName = firstName || "none";
         this.lastName = lastName || "none";
         this.height = height || 0;
@@ -33,27 +34,20 @@ function createPerson(person) {
     return new Promise((resolve, reject) => {
         const newPerson = person;
         let registeredPerson = new Person();
-        let registeredPersonId = 0;
 
-        let sql = "INSERT INTO Person(firstName, lastName, weight, height, birthdate) VALUES(?, ?, ?, ?, ?)";
+        let sql = "INSERT INTO Person(id, firstName, lastName, weight, height, birthdate) VALUES(?, ?, ?, ?, ?, ?)";
         
         const db = database.open(databaseDirectory);
-        //const query = db.prepare(sql);
-        db.run(sql, [newPerson.firstName, newPerson.lastName, newPerson.weight, newPerson.height, newPerson.birthdate], function(err){
-            if (err) {
-                reject(JSON.stringify({message : `Erro: ${err.message}`}));
-            } else {
-                registeredPersonId = this.lastID;
-            }
-        });
-        //query.finalize();
+        const query = db.prepare(sql);
+        query.run(newPerson.id, newPerson.firstName, newPerson.lastName, newPerson.weight, newPerson.height, newPerson.birthdate);
+        query.finalize();
 
-        sql = `SELECT * FROM person WHERE rowid = ?;`;
-        db.get(sql, [registeredPersonId], (err, row) => {
+        sql = `SELECT * FROM person WHERE id = ?;`;
+        db.get(sql, [newPerson.id], (err, row) => {
             if (err) {
                 reject(JSON.stringify({message : `Erro: ${err.message}`}));
             } else {
-                registeredPerson.id = row.rowid;
+                registeredPerson.id = row.id;
                 registeredPerson.firstName = row.firstname;
                 registeredPerson.lastName = row.lastname;
                 registeredPerson.height = row.height;
@@ -72,7 +66,7 @@ function getAll () {
     return new Promise((resolve, reject)=>{
         let everyone = [];
 
-        const sql = "SELECT rowid, * FROM person;";
+        const sql = "SELECT * FROM person;";
         const db = database.open(databaseDirectory);
         
         db.all(sql, [], (err, rows) => {
@@ -81,7 +75,7 @@ function getAll () {
             }
 
             rows.forEach(row => {
-                const id = row.rowid;
+                const id = row.id;
                 const firstName = row.firstname;
                 const lastName = row.lastname;
                 const height = row.height;
