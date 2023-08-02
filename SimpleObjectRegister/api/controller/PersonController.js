@@ -19,9 +19,6 @@ async function register (req, res) {
         });
         req.on('end', async ()=>{
             const {firstName, lastName, birthdate, height, weight} = JSON.parse(body);
-
-            console.log("Program in: register() on Controller.");
-            
             let newPerson = new Person.Person(null, firstName, lastName, birthdate, height, weight);
             newPerson = await Person.createPerson(newPerson);
 
