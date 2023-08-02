@@ -39,13 +39,13 @@ function createPerson(person) {
         
         const db = database.open(databaseDirectory);
         const query = db.prepare(sql);
-        query.run(newPerson.id, newPerson.firstName, newPerson.lastName, newPerson.weight, newPerson.height, newPerson.birthdate);
+        query.run(newPerson.id, newPerson.firstName, newPerson.lastName, newPerson.weight, newPerson.height, newPerson.birthdate.toJSON().slice(0, 10));
         query.finalize();
 
         sql = `SELECT * FROM person WHERE id = ?;`;
         db.get(sql, [newPerson.id], (err, row) => {
             if (err) {
-                reject(JSON.stringify({message : `Erro: ${err.message}`}));
+                reject(JSON.stringify({message : `Error: ${err.message}`}));
             } else {
                 registeredPerson.id = row.id;
                 registeredPerson.firstName = row.firstname;
@@ -81,7 +81,7 @@ function getAll () {
                 const height = row.height;
                 const weight = row.weight;
                 const birthdate = row.birthdate;
-                everyone.push(new Person(id, firstName, lastName, height, weight, birthdate));
+                everyone.push(new Person(id, firstName, lastName, birthdate, height, weight));
             });
             
             resolve(everyone);
