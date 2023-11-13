@@ -91,8 +91,38 @@ function getAll () {
     });
 }
 
+async function getByName (searchingName) {
+    return new Promise((resolve, reject)=>{
+        let found = [];
+
+        const sql = "SELECT * FROM person WHERE firstname || ' ' || lastname LIKE ?;";
+        const db = database.open(databaseDirectory);
+
+        db.all(sql, [`%${searchingName}%`], (err, rows)=>{
+            if (err) {
+                reject(JSON.stringify({message : `Erro: ${err.message}`}));
+            }
+
+            rows.forEach(row => {
+                const id = row.id;
+                const firstName = row.firstname;
+                const lastName = row.lastname;
+                const height = row.height;
+                const weight = row.weight;
+                const birthdate = row.birthdate;
+                found.push(new Person(id, firstName, lastName, birthdate, height, weight));
+            });
+            
+            resolve(found);
+        })
+
+        database.close(db);
+    });
+}
+
 module.exports = {
     Person,
     getAll,
+    getByName,
     createPerson
 }
