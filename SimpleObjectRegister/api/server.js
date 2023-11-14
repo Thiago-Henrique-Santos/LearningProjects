@@ -11,8 +11,9 @@ const server = http.createServer((req, res)=>{
         if(url == "/api/person"){
             getEveryone(req, res);
         } else if (url.match(/^\/api\/person\/([^\/]+)$/)) {
-            const name = url.match(/^\/api\/person\/([^\/]+)$/)[1];
-            getByName(name, req, res);
+            const encodedName = url.match(/^\/api\/person\/([^\/]+)$/)[1];
+            const decodedName = decodeURIComponent(encodedName);
+            getByName(decodedName, req, res);
         } else {
             res.writeHead(404, {'Content-Type': 'application/json'});
             res.end(JSON.stringify({"error" : "Route not found!"}));
