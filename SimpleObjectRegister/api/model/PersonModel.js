@@ -120,6 +120,23 @@ async function getByName (searchingName) {
     });
 }
 
+async function deletePerson (id) {
+    return new Promise ((resolve, reject)=>{
+        let sql = "DELETE FROM person WHERE id = ?";
+    
+        const db = database.open(databaseDirectory);
+        const query = db.prepare(sql);
+        query.run(id, (err)=>{
+            if (err) {
+                reject(err);
+            }
+        });
+        query.finalize();
+        database.close(db);
+        resolve("Pessoa deletada com sucesso!");
+    });    
+}
+
 module.exports = {
     Person,
     getAll,
