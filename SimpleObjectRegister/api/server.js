@@ -1,5 +1,5 @@
 const http = require('http');
-const { getEveryone, getByName, register } = require('./controller/PersonController');
+const { getEveryone, getByName, register, deletePerson } = require('./controller/PersonController');
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -28,7 +28,15 @@ const server = http.createServer((req, res)=>{
                 res.end(JSON.stringify({"error" : "Route not found!"}));
                 break;
         }
-    } else {
+    } else if (req.method == 'DELETE') {
+        if (url.match(/^\/api\/person\/([^\/]+)$/)) {
+            const id = url.split('/')[3];
+            deletePerson(id, req, res);
+        } else {
+            res.writeHead(404, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({"error" : "Route not found!"}));
+        }
+    }else {
         res.writeHead(404, {'Content-Type': 'application/json'});
         res.end(JSON.stringify({"error" : "Route not found!"}));
     }

@@ -42,10 +42,26 @@ async function register (req, res) {
     }
 }
 
+async function deletePerson (id, req, res) {
+    try {
+        console.log(`res content: ${res}`);
+
+        const deleteMessage = await Person.deletePerson(id);
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({deleteMessage}));
+    } catch (error) {
+        console.error("Error:", error);
+
+        res.writeHead(500, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({message : `Ocorreu o seguinte erro: ${error}`}));
+    }
+}
+
 
 
 module.exports = {
     getEveryone,
     getByName,
-    register
+    register,
+    deletePerson
 }
