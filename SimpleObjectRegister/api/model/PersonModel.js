@@ -134,12 +134,13 @@ async function deletePerson (id) {
         query.finalize();
         database.close(db);
         resolve("Pessoa deletada com sucesso!");
-    });    
+    });
 }
 
 module.exports = {
     Person,
     getAll,
     getByName,
-    createPerson
+    createPerson,
+    deletePerson
 }
