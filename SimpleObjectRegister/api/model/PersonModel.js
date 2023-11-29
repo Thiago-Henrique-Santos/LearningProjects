@@ -143,14 +143,14 @@ async function updatePerson (person) {
     
         const db = database.open(databaseDirectory);
         const query = db.prepare(sql);
-        query.run([person.firstName, person.lastName, person.weight, person.height, person.birthdate.toJSON().slice(0, 10), person.id], () => {
+        query.run([person.firstName, person.lastName, person.weight, person.height, person.birthdate.toJSON().slice(0, 10), person.id], (err) => {
             if (err) {
                 reject(err);
             }
         });
         query.finalize();
 
-        getPersonById(id)
+        getPersonById(person.id)
             .then((result)=>{
                 resolve(result);
             })

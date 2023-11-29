@@ -39,7 +39,7 @@ const server = http.createServer((req, res)=>{
     } else if(req.method == 'PUT') {
         switch (url) {
             case "/api/person":
-                update(req, res);
+                updatePerson(req, res);
                 break;
             default:
                 res.writeHead(404, {'Content-Type': 'application/json'});
