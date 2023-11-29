@@ -55,9 +55,21 @@ async function deletePerson (id, req, res) {
 
 async function updatePerson (person, req, res) {
     try {
+        let body = "";
+        req.on('data', (chunk)=>{
+            body += chunk.toString();
+        });
+        req.on('end', async ()=>{
+            const {id, firstName, lastName, birthdate, height, weight} = JSON.parse(body);
+            let updatedPerson = new Person.Person(id, firstName, lastName, birthdate, height, weight);
+            updatedPerson = await Person.updatePerson(updatedPerson);
 
+            res.writeHead(201, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify(updatedPerson));
+        });
     } catch (error) {
-
+        res.writeHead(500, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({message : `Ocorreu o seguinte erro: ${error}`}));
     }
 }
 
