@@ -137,10 +137,59 @@ async function deletePerson (id) {
     });
 }
 
+async function updatePerson (person) {
+    return new Promise ((resolve, reject)=>{
+        let sql = `UPDATE person SET firstName = ?, lastName = ?, weight = ?, height = ?, birthdate = ? WHERE id = ?`;
+    
+        const db = database.open(databaseDirectory);
+        const query = db.prepare(sql);
+        query.run([person.firstName, person.lastName, person.weight, person.height, person.birthdate.toJSON().slice(0, 10), person.id], () => {
+            if (err) {
+                reject(err);
+            }
+        });
+        query.finalize();
+
+        getPersonById(id)
+            .then((result)=>{
+                resolve(result);
+            })
+            .catch((error)=>{
+                reject(error);
+            })
+    });
+}
+
+function getPersonById(id) {
+    return new Promise ((resolve, reject)=>{
+        const person = new Person();
+        let sql = `SELECT * FROM person WHERE id = ?;`;
+    
+        const db = database.open(databaseDirectory);
+        db.get(sql, [id], (err, row) => {
+            if (err) {
+                reject(err);
+            } else {
+                person.id = row.id;
+                person.firstName = row.firstname;
+                person.lastName = row.lastname;
+                person.height = row.height;
+                person.weight = row.weight;
+                person.birthdate = row.birthdate;
+            }
+    
+            resolve(person);
+        });
+    
+        database.close(db);
+    });
+}
+
 module.exports = {
     Person,
     getAll,
     getByName,
     createPerson,
-    deletePerson
+    deletePerson,
+    updatePerson
 }
