@@ -78,5 +78,6 @@ module.exports = {
     getEveryone,
     getByName,
     register,
-    deletePerson
+    deletePerson,
+    updatePerson
 }
