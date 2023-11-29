@@ -1,5 +1,5 @@
 const http = require('http');
-const { getEveryone, getByName, register, deletePerson } = require('./controller/PersonController');
+const { getEveryone, getByName, register, deletePerson, updatePerson } = require('./controller/PersonController');
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -36,7 +36,17 @@ const server = http.createServer((req, res)=>{
             res.writeHead(404, {'Content-Type': 'application/json'});
             res.end(JSON.stringify({"error" : "Route not found!"}));
         }
-    }else {
+    } else if(req.method == 'PUT') {
+        switch (url) {
+            case "/api/person":
+                update(req, res);
+                break;
+            default:
+                res.writeHead(404, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify({"error" : "Route not found!"}));
+                break;
+        }
+    } else {
         res.writeHead(404, {'Content-Type': 'application/json'});
         res.end(JSON.stringify({"error" : "Route not found!"}));
     }

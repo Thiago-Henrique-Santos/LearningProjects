@@ -53,7 +53,7 @@ async function deletePerson (id, req, res) {
     }
 }
 
-async function updatePerson (person, req, res) {
+async function updatePerson (req, res) {
     try {
         let body = "";
         req.on('data', (chunk)=>{
