@@ -150,35 +150,21 @@ async function updatePerson (person) {
         });
         query.finalize();
 
-        getPersonById(person.id)
-            .then((result)=>{
-                resolve(result);
-            })
-            .catch((error)=>{
-                reject(error);
-            })
-    });
-}
-
-function getPersonById(id) {
-    return new Promise ((resolve, reject)=>{
-        const person = new Person();
-        let sql = `SELECT * FROM person WHERE id = ?;`;
-    
-        const db = database.open(databaseDirectory);
-        db.get(sql, [id], (err, row) => {
+        let updatedPerson = new Person();
+        sql = "SELECT * FROM person WHERE id = ?;";
+        db.get(sql, [person.id], (err, row) => {
             if (err) {
                 reject(err);
             } else {
-                person.id = row.id;
-                person.firstName = row.firstname;
-                person.lastName = row.lastname;
-                person.height = row.height;
-                person.weight = row.weight;
-                person.birthdate = row.birthdate;
+                updatedPerson.id = row.id;
+                updatedPerson.firstName = row.firstname;
+                updatedPerson.lastName = row.lastname;
+                updatedPerson.height = row.height;
+                updatedPerson.weight = row.weight;
+                updatedPerson.birthdate = row.birthdate;
             }
     
-            resolve(person);
+            resolve(updatedPerson);
         });
     
         database.close(db);
