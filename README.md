@@ -8,7 +8,7 @@ This repository keeps simple projects I do for recollect, practice and buff up p
 
 ## Simple Object Register
 
-The objective of this project is practicing basic object-oriented programming with JavaScript. I also used it for practing node.js vanilla, developing a simple REST API with SQLite database, able to perform a simple CRUD.
+The objective of this project is practicing basic object-oriented programming with JavaScript. I also used it for practing node.js vanilla, developing a simple RESTful API with SQLite database, able to perform a simple CRUD.
 
 > **Endpoints: route to access the functionalities**
 >
