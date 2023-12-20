@@ -2,9 +2,9 @@ const Person = require('../model/PersonModel');
 
 async function getEveryone (req, res) {
     try {
-        const everyone = await Person.getAll();
+        const data = await Person.getAll();
         res.writeHead(200, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify({everyone}));
+        res.end(JSON.stringify({data}));
     } catch (error) {
         res.writeHead(500, {'Content-Type': 'application/json'});
         res.end(JSON.stringify({message : `Ocorreu o seguinte erro: ${error}`}));
@@ -13,9 +13,9 @@ async function getEveryone (req, res) {
 
 async function getByName (name, req, res) {
     try {
-        const found = await Person.getByName(name);
+        const data = await Person.getByName(name);
         res.writeHead(200, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify({found}));
+        res.end(JSON.stringify({data}));
     } catch (error) {
         res.writeHead(500, {'Content-Type': 'application/json'});
         res.end(JSON.stringify({message : `Ocorreu o seguinte erro: ${error}`}));
