@@ -2,7 +2,7 @@ const http = require('http');
 const { getEveryone, getByName, register, deletePerson, updatePerson } = require('./controller/PersonController');
 
 const hostname = '127.0.0.1';
-const port = 3000;
+const port = 3333;
 
 const server = http.createServer((req, res)=>{
     const url = req.url;
