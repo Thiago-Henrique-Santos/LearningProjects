@@ -64,7 +64,7 @@ function createPerson(person) {
 
 function getAll () {
     return new Promise((resolve, reject)=>{
-        let everyone = [];
+        let data = [];
 
         const sql = "SELECT * FROM person;";
         const db = database.open(databaseDirectory);
@@ -81,10 +81,10 @@ function getAll () {
                 const height = row.height;
                 const weight = row.weight;
                 const birthdate = row.birthdate;
-                everyone.push(new Person(id, firstName, lastName, birthdate, height, weight));
+                data.push(new Person(id, firstName, lastName, birthdate, height, weight));
             });
             
-            resolve(everyone);
+            resolve(data);
         });
 
         database.close(db);
@@ -93,7 +93,7 @@ function getAll () {
 
 async function getByName (searchingName) {
     return new Promise((resolve, reject)=>{
-        let found = [];
+        let data = [];
 
         const sql = "SELECT * FROM person WHERE firstname || ' ' || lastname LIKE ?;";
         const db = database.open(databaseDirectory);
@@ -110,10 +110,10 @@ async function getByName (searchingName) {
                 const height = row.height;
                 const weight = row.weight;
                 const birthdate = row.birthdate;
-                found.push(new Person(id, firstName, lastName, birthdate, height, weight));
+                data.push(new Person(id, firstName, lastName, birthdate, height, weight));
             });
             
-            resolve(found);
+            resolve(data);
         })
 
         database.close(db);
