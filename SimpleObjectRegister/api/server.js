@@ -1,7 +1,7 @@
 const http = require('http');
 const url = require('url');
 const querystring = require('querystring');
-const { getEveryone, getByName, register, deletePerson, updatePerson } = require('./controller/PersonController');
+const { getEveryone, getByName, getById, register, deletePerson, updatePerson } = require('./controller/PersonController');
 
 const hostname = '127.0.0.1';
 const port = 3333;
@@ -20,13 +20,11 @@ const server = http.createServer((req, res)=>{
             getEveryone(req, res);
         } else if (path == "/api/person/resource" && parsedQuerystring.name) {
             const name = parsedQuerystring.name;
-            console.log(name);
             getByName(name, req, res);
-        } /*else if (path.match(/^\/api\/person\/([^\/]+)$/)) {
-            const encodedName = url.match(/^\/api\/person\/([^\/]+)$/)[1];
-            const decodedName = decodeURIComponent(encodedName);
-            getByName(decodedName, req, res);
-        }*/ else {
+        } else if (path.match(/^\/api\/person\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/)) {
+            const id = path.split('/')[3];
+            getById(id, req, res);
+        } else {
             res.writeHead(404, {'Content-Type': 'application/json'});
             res.end(JSON.stringify({"error" : "Route not found!"}));
         }
