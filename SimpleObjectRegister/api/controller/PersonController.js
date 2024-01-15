@@ -22,6 +22,17 @@ async function getByName (name, req, res) {
     }
 }
 
+async function getById (id, req, res) {
+    try {
+        const data = await Person.getById(id);
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({data}));
+    } catch (error) {
+        res.writeHead(500, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({message : `Ocorreu o seguinte erro: ${error}`}));
+    }
+}
+
 async function register (req, res) {
     try {
         let body = "";
@@ -77,6 +88,7 @@ async function updatePerson (req, res) {
 module.exports = {
     getEveryone,
     getByName,
+    getById,
     register,
     deletePerson,
     updatePerson

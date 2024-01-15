@@ -120,6 +120,19 @@ async function getByName (searchingName) {
     });
 }
 
+async function getById(id) {
+    return new Promise((resolve, reject)=>{
+        const sql = "SELECT * FROM person WHERE id = ?;";
+        const db = database.open(databaseDirectory);
+        db.get(sql, [id], (err, row)=>{
+            if (err) {
+                reject(err);
+            }
+            resolve(row ? row : `Nenhuma pessoa encontrada com o id ${id}`);
+        });
+    });
+}
+
 async function deletePerson (id) {
     return new Promise ((resolve, reject)=>{
         let sql = "DELETE FROM person WHERE id = ?";
@@ -175,6 +188,7 @@ module.exports = {
     Person,
     getAll,
     getByName,
+    getById,
     createPerson,
     deletePerson,
     updatePerson

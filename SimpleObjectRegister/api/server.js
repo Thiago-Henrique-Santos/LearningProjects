@@ -1,4 +1,6 @@
 const http = require('http');
+const url = require('url');
+const querystring = require('querystring');
 const { getEveryone, getByName, register, deletePerson, updatePerson } = require('./controller/PersonController');
 
 const hostname = '127.0.0.1';
@@ -9,21 +11,27 @@ const server = http.createServer((req, res)=>{
     res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-    const url = req.url;
+    const parsedUrl = url.parse(req.url);
+    const parsedQuerystring = querystring.parse(parsedUrl.query);
+    const path = parsedUrl.pathname
 
     if (req.method == 'GET') {
-        if(url == "/api/person"){
+        if (path == "/api/person"){
             getEveryone(req, res);
-        } else if (url.match(/^\/api\/person\/([^\/]+)$/)) {
+        } else if (path == "/api/person/resource" && parsedQuerystring.name) {
+            const name = parsedQuerystring.name;
+            console.log(name);
+            getByName(name, req, res);
+        } /*else if (path.match(/^\/api\/person\/([^\/]+)$/)) {
             const encodedName = url.match(/^\/api\/person\/([^\/]+)$/)[1];
             const decodedName = decodeURIComponent(encodedName);
             getByName(decodedName, req, res);
-        } else {
+        }*/ else {
             res.writeHead(404, {'Content-Type': 'application/json'});
             res.end(JSON.stringify({"error" : "Route not found!"}));
         }
     } else if (req.method == 'POST') {
-        switch (url) {
+        switch (path) {
             case "/api/person":
                 register(req, res);
                 break;
@@ -33,7 +41,7 @@ const server = http.createServer((req, res)=>{
                 break;
         }
     } else if (req.method == 'DELETE') {
-        if (url.match(/^\/api\/person\/([^\/]+)$/)) {
+        if (path.match(/^\/api\/person\/([^\/]+)$/)) {
             const id = url.split('/')[3];
             deletePerson(id, req, res);
         } else {
@@ -41,7 +49,7 @@ const server = http.createServer((req, res)=>{
             res.end(JSON.stringify({"error" : "Route not found!"}));
         }
     } else if(req.method == 'PUT') {
-        switch (url) {
+        switch (path) {
             case "/api/person":
                 updatePerson(req, res);
                 break;
