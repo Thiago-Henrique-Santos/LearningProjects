@@ -16,7 +16,9 @@ The objective of this project is practicing basic object-oriented programming wi
 >
 > /api/person (Read route - all registers)
 >
-> /api/person/:name (Read route - a register by name)
+> /api/person/:id (Read route - a register by id)
+>
+> /api/person/resouce?name=[name] (Read route - registers by name)
 >
 > /api/person (Update route - a specif register)
 >
@@ -82,7 +84,7 @@ fetch('http://localhost:3000/api/person', {
 **Example of expecting response:**
 ```json
 {
-	"everyone": [
+	"data": [
 		{
 			"id": "5bd8c96a-2745-434b-891c-d9af8b872b77",
 			"firstName": "Wesley",
@@ -113,17 +115,50 @@ fetch('http://localhost:3000/api/person', {
 .then(json => console.log(json));
 ```
 
-### GET (Read people by name) 🔍
+### GET (Read person by id) 🔍
 
 **Request url:**
 ```
-/api/person/:name
+/api/person/:id
 ```
 
 **Example of expecting response:**
 ```json
 {
-	"found": [
+	"data": [
+		{
+			"id": "ad1909d8-8c94-44ce-898d-89de76198268",
+			"firstName": "Yuri",
+			"lastName": "Rosa",
+			"height": 1.8,
+			"weight": 75.4,
+			"birthdate": "1998-10-25T00:00:00.000Z"
+		}
+	]
+}
+```
+
+**Example of how to use it in Javascript:**
+```js
+fetch('http://localhost:3000/api/person/ad1909d8-8c94-44ce-898d-89de76198268', {
+	method: "GET",
+	headers: {"Content-type": "application/json; charset=UTF-8"}
+})
+.then(response => response.json()) 
+.then(json => console.log(json));
+```
+
+### GET (Read people by name) 🔍
+
+**Request url:**
+```
+/api/person/resource?name=[name]
+```
+
+**Example of expecting response:**
+```json
+{
+	"data": [
 		{
 			"id": "6b589c6a-61c2-4255-bdeb-4e62edcd0279",
 			"firstName": "Yuri",
@@ -146,7 +181,7 @@ fetch('http://localhost:3000/api/person', {
 
 **Example of how to use it in Javascript:**
 ```js
-fetch('http://localhost:3000/api/person/Yuri%20Ro', {
+fetch('http://localhost:3000/api/person/resource?name=Yuri%20Ro', {
 	method: "GET",
 	headers: {"Content-type": "application/json; charset=UTF-8"}
 })
