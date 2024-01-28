@@ -66,10 +66,9 @@ const data = {
 	"weight": 80.1
 }
 
-fetch('http://localhost:3000/api/person', {
+fetch('http://localhost:3333/api/person', {
 	method: "POST",
-	body: JSON.stringify(data),
-	headers: {"Content-type": "application/json; charset=UTF-8"}
+	body: JSON.stringify(data)
 })
 .then(response => response.json()) 
 .then(json => console.log(json));
@@ -107,9 +106,8 @@ fetch('http://localhost:3000/api/person', {
 
 **Example of how to use it in Javascript:**
 ```js
-fetch('http://localhost:3000/api/person', {
-	method: "GET",
-	headers: {"Content-type": "application/json; charset=UTF-8"}
+fetch('http://localhost:3333/api/person', {
+	method: "GET"
 })
 .then(response => response.json()) 
 .then(json => console.log(json));
@@ -140,9 +138,8 @@ fetch('http://localhost:3000/api/person', {
 
 **Example of how to use it in Javascript:**
 ```js
-fetch('http://localhost:3000/api/person/ad1909d8-8c94-44ce-898d-89de76198268', {
-	method: "GET",
-	headers: {"Content-type": "application/json; charset=UTF-8"}
+fetch('http://localhost:3333/api/person/ad1909d8-8c94-44ce-898d-89de76198268', {
+	method: "GET"
 })
 .then(response => response.json()) 
 .then(json => console.log(json));
@@ -181,9 +178,8 @@ fetch('http://localhost:3000/api/person/ad1909d8-8c94-44ce-898d-89de76198268', {
 
 **Example of how to use it in Javascript:**
 ```js
-fetch('http://localhost:3000/api/person/resource?name=Yuri%20Ro', {
-	method: "GET",
-	headers: {"Content-type": "application/json; charset=UTF-8"}
+fetch('http://localhost:3333/api/person/resource?name=Yuri%20Ro', {
+	method: "GET"
 })
 .then(response => response.json()) 
 .then(json => console.log(json));
@@ -235,10 +231,9 @@ const data = {
 	"weight": 78.1
 }
 
-fetch('http://localhost:3000/api/person', {
+fetch('http://localhost:3333/api/person', {
 	method: "PUT",
-	body: JSON.stringify(data),
-	headers: {"Content-type": "application/json; charset=UTF-8"}
+	body: JSON.stringify(data)
 })
 .then(response => response.json()) 
 .then(json => console.log(json));
@@ -260,9 +255,8 @@ fetch('http://localhost:3000/api/person', {
 
 **Example of how to use it in Javascript:**
 ```js
-fetch('http://localhost:3000/api/person/6b589c6a-61c2-4255-bdeb-4e62edcd0279', {
-	method: "DELETE",
-	headers: {"Content-type": "application/json; charset=UTF-8"}
+fetch('http://localhost:3333/api/person/6b589c6a-61c2-4255-bdeb-4e62edcd0279', {
+	method: "DELETE"
 })
 .then(response => response.json()) 
 .then(json => console.log(json));
