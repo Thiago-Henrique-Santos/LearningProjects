@@ -46,7 +46,7 @@ const server = http.createServer((req, res)=>{
         }
     } else if (req.method == 'DELETE') {
         if (path.match(/^\/api\/person\/([^\/]+)$/)) {
-            const id = url.split('/')[3];
+            const id = path.split('/')[3];
             deletePerson(id, req, res);
         } else {
             res.writeHead(404, {'Content-Type': 'application/json'});
