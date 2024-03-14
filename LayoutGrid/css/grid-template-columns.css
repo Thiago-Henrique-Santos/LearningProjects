@@ -1,0 +1,72 @@
+* {
+    box-sizing: border-box;
+}
+
+.wrapper div {
+    border: 1px solid orangered;
+
+    background-color: orange;
+}
+
+.example-1 {
+    display: grid;
+    grid-template-columns: 200px 200px 200px; /*Define que haverá 3 colunas, que possuirão 200px
+                                              Adicionado mais de 3 itens filhos, serão dividos 
+                                              em uma grade/tabela de 3 colunas, cada coluna com 
+                                              200px.*/
+    margin-bottom: 50px;
+}
+
+.example-2 {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr; /*A unidade "fr" divide o espaço disponível em frações, 
+                                        assim, 1fr define 1 fração do espaço disponível, 2fr 
+                                        representa 2 frações do espaço disponível, e por assim
+                                        em diante.
+                                        Essa unidade permite criar grids flexíveis. Ela foi 
+                                        adicionada ao CSS junto com o grid, justamente para
+                                        permitir criar grids flexíveis.*/
+    margin-bottom: 50px;
+}
+
+.example-3 {
+    display: grid;
+    grid-template-columns: 100px 2fr 1fr; /*As unidades podem ser misturadas conforme a necessidade.
+                                          Lembrando que elas disponibilizam o tamanho das colunas na 
+                                          ordem em que são colocadas, aplicando isto em todas as linhas.
+                                          Ex:
+                                          coluna1 coluna2 coluna3 colunas...
+                                             "       "       "       "      
+                                             "       "       "       "      */
+    margin-bottom: 50px;
+}
+
+.example-4 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /*Para muitas colunas seguidas, que terão mesmo tamanho,
+                                            podemos utilizar a notação repeat(), colocando o número de
+                                            colunas e o tamanho delas.*/
+    margin-bottom: 50px;
+}
+
+.example-5 {
+    display: grid;
+    grid-template-columns: 75px repeat(3, 1fr) 700px; /*Podemos misturar, também, conforme a necessidade.*/
+    margin-bottom: 50px;
+}
+
+.example-6 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr 2fr); /*A notação repeat() tem por parâmetro um tracklisting, sendo
+                                                assim, é possível criar padrões de repetição. Neste exemplo,
+                                                em uma lista de 10 tracks (no html), criei um padrão de
+                                                coluna com 1fr, seguida com coluna de 2fr, e assim se repete
+                                                até o fim da lista (no caso, os 10 tracks).*/
+    margin-bottom: 50px;
+}
+
+.example-7 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr 2fr); /*Fazendo a repetição anterior, em uma lista de 9 tracks.*/
+    margin-bottom: 50px;
+}
